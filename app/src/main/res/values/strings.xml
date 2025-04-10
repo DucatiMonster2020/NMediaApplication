@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">NMedia</string>
+    <string name="nmedia">NMedia!</string>
+    <string name="description_post_menu" translatable="false">Меню поста</string>
+    <string name="description_post_author_avatar" translatable="false" />
+    <string name="count_likes" translatable="false">10</string>
+    <string name="count_share" translatable="false">5</string>
+    <string name="count_views" translatable="false">500</string>
+    <string name="image_heart" translatable="false">TODO</string>
+    <string name="image_share" translatable="false">TODO</string>
+    <string name="image_eye" translatable="false">TODO</string>
+    <string name="menu_remove">Remove</string>
+    <string name="post_text">Post_text</string>
+    <string name="menu_edit">Edit</string>
+</resources>

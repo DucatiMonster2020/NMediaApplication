@@ -15,7 +15,8 @@ class PostRepositoryInMemory: PostRepository {
             sharedByMe = false,
             countLikes = 992,
             countShare = 1998,
-            countView = 1300000
+            countView = 1300000,
+            videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
         Post(
             id = nextId++,

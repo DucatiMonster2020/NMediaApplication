@@ -9,7 +9,8 @@ data class Post(
     val sharedByMe: Boolean,
     val countLikes: Long = 0,
     val countShare: Long = 0,
-    val countView: Long
+    val countView: Long,
+    val videoUrl: String? = null
 )
 fun countFormat (count: Long): String {
     return when (count) {

@@ -9,7 +9,9 @@
     <string name="image_heart" translatable="false">TODO</string>
     <string name="image_share" translatable="false">TODO</string>
     <string name="image_eye" translatable="false">TODO</string>
+    <string name="chooser_share_post">Share post</string>
     <string name="menu_remove">Remove</string>
     <string name="post_text">Post_text</string>
     <string name="menu_edit">Edit</string>
+    <string name="error_empty_content" translatable="false">error_empty_content</string>
 </resources>

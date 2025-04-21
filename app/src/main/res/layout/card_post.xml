@@ -76,6 +76,31 @@
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="@sample/posts.json/data/content" />
 
+    <FrameLayout
+        android:id="@+id/videoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        android:visibility="gone"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/videoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/video_placeholder"/>
+
+        <ImageButton
+            android:id="@+id/playButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+    </FrameLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/heart"
         style="@style/App.Widget.LikeButton"
@@ -86,7 +111,7 @@
         android:checkable="true"
         app:icon="@drawable/ic_like_selector"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/videoContainer"
         android:layout_marginTop="@dimen/common_spacing" />
 
 
@@ -100,7 +125,7 @@
         android:contentDescription="@string/image_share"
         app:layout_constraintStart_toEndOf="@id/heart"
         android:layout_marginStart="@dimen/common_spacing"
-        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/videoContainer"
         android:layout_marginTop="@dimen/common_spacing"
         app:icon="@drawable/share_variant" />
 
@@ -109,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/videoContainer"
         android:layout_marginTop="@dimen/common_spacing"
         android:text="@string/count_views" />
 
@@ -120,7 +145,7 @@
         android:contentDescription="@string/image_eye"
         app:layout_constraintEnd_toStartOf="@id/countView"
         android:layout_marginEnd="@dimen/common_spacing"
-        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/videoContainer"
         android:layout_marginTop="@dimen/common_spacing"
         app:srcCompat="@drawable/eye" />
 

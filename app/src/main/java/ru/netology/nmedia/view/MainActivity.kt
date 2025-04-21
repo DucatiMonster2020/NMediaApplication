@@ -1,17 +1,15 @@
 package ru.netology.nmedia.view
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostAdapter
 import ru.netology.nmedia.databinding.ActivityPageBinding
 import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
-import ru.netology.nmedia.viewmodel.empty
-import util.AndroidUtils
-import util.focusAndShowKeyboard
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,13 +19,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
+        val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
+            result?.let { text ->
+                viewModel.changeContent(text)
+                viewModel.save()
+            }
+        }
+
+        val editPostLauncher = registerForActivityResult(NewPostContract) { result ->
+            result?.let { text ->
+                viewModel.changeContent(text)
+                viewModel.save()
+            }
+        }
+
         val adapter = PostAdapter(object : OnInteractionListener {
             override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
             }
 
             override fun onShare(post: Post) {
-                viewModel.shareById(post.id)
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                }
+                val chooser = Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                startActivity(chooser)
             }
 
             override fun onRemove(post: Post) {
@@ -35,10 +53,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
-                viewModel.edit(post)
+                editPostLauncher.launch(post.content)
+            }
+
+            override fun onPlayVideo(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
+                startActivity(intent)
             }
         }
         )
+
         binding.main.adapter = adapter
         viewModel.data.observe(this) { posts ->
             val newPost = adapter.currentList.size < posts.size
@@ -47,40 +71,9 @@ class MainActivity : AppCompatActivity() {
                     binding.main.smoothScrollToPosition(0)
                 }
             }
-        }
-        viewModel.edited.observe(this) { editedPost ->
-            if (editedPost.id == 0L) {
-                return@observe
-            }
-                binding.content.requestFocus()
-                binding.content.setText(editedPost.content)
-                binding.content.focusAndShowKeyboard()
-                binding.editGroup.visibility = View.VISIBLE
-            }
-            binding.save.setOnClickListener {
-                with(binding.content) {
-                    if (text.isNullOrBlank()) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Content can't be empty",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return@setOnClickListener
-                    }
-                    viewModel.changeContent(text.toString())
-                    viewModel.save()
-                    binding.content.setText("")
-                    binding.content.clearFocus()
-                    binding.content.focusAndShowKeyboard()
-                    AndroidUtils.hideKeyboard(this)
-                }
-            }
-            binding.cancelButton.setOnClickListener {
-                viewModel.edited.value = empty
-                binding.content.setText("")
-                binding.content.clearFocus()
-                binding.content.focusAndShowKeyboard()
-                binding.editGroup.visibility = View.GONE
+            binding.add.setOnClickListener {
+                newPostLauncher.launch(null)
             }
         }
     }
+}
